@@ -1,0 +1,22 @@
+{
+  "name": "whether the weather",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Vassilis Krikonis <vassiliskrikonis@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "vminpoly": "*"
+  }
+}

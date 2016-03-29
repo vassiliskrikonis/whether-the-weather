@@ -1,0 +1,113 @@
+/* body, html {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+body {
+    padding: 1em 25%;
+}
+
+p {
+    margin: 0 auto;
+    font-size: 10vmin;
+    text-align: center;
+}
+
+@media screen and (orientation: landscape) {
+    p {
+        display: inline;
+    }
+} */
+
+html, body {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+body {
+	font-family: 'Libre Baskerville', serif;
+	padding-top: 10px;
+	font-size: 1.5em;
+}
+p {
+	margin: 0;
+}
+sup {
+	font-size: 0.5em;
+}
+#container {
+	width: 80%;
+	margin: 0 auto;
+}
+.loading p:not(:first-of-type) {
+	display: none;
+}
+.loading #icon {
+	display: none;
+}
+#icon {
+	margin: 0;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+#icon img {
+	width: 140px;
+	height: 140px;
+}
+.when {
+	font-style: italic;
+}
+#what {
+	font-weight: bold;
+}
+
+#footnote {
+	font-size: 0.2em;
+	position: absolute;
+	bottom: 4%;
+	width: 80%;
+	text-align: left;
+}
+a {
+	color: inherit;
+}
+
+/*@media (orientation: landscape) {
+	body {
+		font-size: 2em;
+		padding-top: 26px;
+	}
+	p:nth-of-type(2), p:nth-of-type(3) {
+		display: inline;
+	}
+	#icon, #container {
+		float: left;
+	}
+	#icon {
+		margin-left: 10%;
+	}
+	#container {
+		width: 60%;
+		margin-top: 4%;
+	}
+	#footnote {
+		width: 100%;
+		left: 0;
+	}
+	#footnote p {
+		margin-left: 5%;
+	}
+}*/
+
+@media (min-height: 375px) {
+	body {
+		padding-top: 20px;
+		/*font-size: 2em;*/
+	}
+}
+@media (min-height: 559px) {
+	body {
+		padding-top: 160px;
+		font-size: 2em;
+	}
+}
