@@ -3,8 +3,7 @@ var currentTemp;
 var currentIcon;
 var previousTemp;
 
-window.addEventListener("orientationchange", function()
-{
+window.addEventListener("orientationchange", function() {
     setTimeout(function()
     {
     	$('html, body, window').scrollTop(0);
@@ -12,38 +11,29 @@ window.addEventListener("orientationchange", function()
 });
 
 
-$(document).ready(function()
-{
-	if ("geolocation" in navigator)
-	{
-	  /* geolocation is available */
-	  // navigator.geolocation.getCurrentPosition(function(position)
-	  // {
-	  // 	currentPosition.latitude = position.coords.latitude;
-	  // 	currentPosition.longitude = position.coords.longitude;
-	  // 	save('currentPosition.latitude', currentPosition.latitude);
-	  // 	save('currentPosition.longitude', currentPosition.longitude);
-		// });
-    // save('currentPosition.latitude', 37.33233141);
-    // save('currentPosition.longitude', -122.0312186);
-    currentPosition.latitude = 37.33233141;
-    currentPosition.longitude = -122.0312186;
-    loading();
-	}
-	else
-	{
-	  showError('Geolocation is not available');
-	}
-});
-
 $(document).ready(function() {
-  // loading();
-});
-
-function loading() {
-  // var defer = $.Deferred();
   $('.when').html('').eq(0).html('loading...');
   $('body').addClass('loading');
+	if ("geolocation" in navigator) {
+	  /* geolocation is available */
+	  navigator.geolocation.getCurrentPosition(function(position) {
+	  	currentPosition.latitude = position.coords.latitude;
+	  	currentPosition.longitude = position.coords.longitude;
+	  	// save('currentPosition.latitude', currentPosition.latitude);
+	  	// save('currentPosition.longitude', currentPosition.longitude);
+      getWeather();
+		});
+    // save('currentPosition.latitude', 37.33233141);
+    // save('currentPosition.longitude', -122.0312186);
+    // currentPosition.latitude = 37.33233141;
+    // currentPosition.longitude = -122.0312186;
+	}
+	else
+	  showError('Geolocation is not available');
+});
+
+function getWeather() {
+  // var defer = $.Deferred();
   getToday().done(function(result) {
     console.log('in getToday.done');
     currentTemp = result.currently.apparentTemperature;
