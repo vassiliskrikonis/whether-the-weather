@@ -43,7 +43,7 @@ sup {
 	display: none;
 }
 .loading #icon {
-	display: none;
+	/*display: none;*/
 }
 #icon {
 	margin: 0;
@@ -53,6 +53,24 @@ sup {
 #icon img {
 	width: 140px;
 	height: 140px;
+}
+
+.loading #icon img, #icon canvas {
+	position: relative;
+}
+#icon img {
+	right: -70px;
+	z-index: 2;
+}
+.loading #icon canvas {
+	left: -80px;
+	z-index: 0;
+}
+.loading #icon canvas {
+	display: inline-block;
+}
+#icon canvas {
+	display: none;
 }
 .when {
 	font-style: italic;

@@ -13,5 +13,8 @@
   "scripts": {
     "server": "grunt server"
   },
-  "author": "Vassilis Krikonis"
+  "author": "Vassilis Krikonis",
+  "dependencies": {
+    "poly-decomp": "git://github.com/schteppe/poly-decomp.js.git"
+  }
 }
