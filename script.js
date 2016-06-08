@@ -12,21 +12,16 @@ window.addEventListener("orientationchange", function() {
 
 
 $(document).ready(function() {
-  $('.when').html('').eq(0).html('loading...');
+  $('.when').html('').eq(0).html('loading...!');
   $('body').addClass('loading');
+  runPhysics();
 	if ("geolocation" in navigator) {
 	  /* geolocation is available */
 	  navigator.geolocation.getCurrentPosition(function(position) {
 	  	currentPosition.latitude = position.coords.latitude;
 	  	currentPosition.longitude = position.coords.longitude;
-	  	// save('currentPosition.latitude', currentPosition.latitude);
-	  	// save('currentPosition.longitude', currentPosition.longitude);
       getWeather();
 		});
-    // save('currentPosition.latitude', 37.33233141);
-    // save('currentPosition.longitude', -122.0312186);
-    // currentPosition.latitude = 37.33233141;
-    // currentPosition.longitude = -122.0312186;
 	}
 	else
 	  showError('Geolocation is not available');
@@ -102,4 +97,71 @@ function setIcon(icon) {
     default:
       $('#icon img').attr('src', '');
   }
+}
+
+function runPhysics() {
+  // module aliases
+  var Engine = Matter.Engine,
+      Render = Matter.Render,
+      World = Matter.World,
+      Bodies = Matter.Bodies,
+      Composites = Matter.Composites,
+      Query = Matter.Query,
+      Svg = Matter.Svg;
+
+  // create an engine
+  var engine = Engine.create();
+
+  // create a renderer
+  var render = Render.create({
+      element: document.getElementById('icon'),
+      engine: engine,
+      options: {
+        height: 140,
+        width: 140,
+        background: '#ffffff',
+        wireframes: false
+      }
+  });
+
+  var boundary;
+  $.get('icons/vintage/bounding.svg').done(function(data) {
+    var vertices = [];
+    $(data).find('path').each(function(i, path) {
+      vertices.push(Svg.pathToVertices(path, 15));
+    });
+
+    boundary = Bodies.fromVertices(62, 69, vertices, {
+      isStatic: true,
+      render: {
+        fillStyle: '#ffffff',
+        strokeStyle: '#ffffff'
+      }
+    });
+    Matter.Body.scale(boundary, 0.25, 0.22);
+
+    World.add(engine.world, boundary);
+
+    var bodyOptions = {
+        frictionAir: 0,
+        friction: 0.0001,
+        restitution: 0.6,
+        render: {
+          fillStyle: "#000",
+          lineWidth: 0,
+          strokeStyle: '#000'
+        }
+    };
+
+    World.add(engine.world, Composites.stack(52, 10, 10, 5, 1, 1, function(x, y) {
+        if (Query.point([boundary], { x: x, y: y }).length === 0) {
+            return Bodies.polygon(x, y, 5, 2, bodyOptions);
+        }
+    }));
+
+    Engine.run(engine);
+    engine.timing.timeScale = 0.2;
+    // Matter.Engine.update();
+    Render.run(render);
+  });
 }

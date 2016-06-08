@@ -17,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "vminpoly": "*"
+    "vminpoly": "*",
+    "Matter": "matter-js#~0.10.0"
   }
 }
