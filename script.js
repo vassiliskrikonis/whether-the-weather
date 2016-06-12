@@ -131,7 +131,7 @@ function runPhysics() {
       vertices.push(Svg.pathToVertices(path, 15));
     });
 
-    boundary = Bodies.fromVertices(62, 69, vertices, {
+    boundary = Bodies.fromVertices(60, 69, vertices, {
       isStatic: true,
       render: {
         fillStyle: '#ffffff',
@@ -153,7 +153,7 @@ function runPhysics() {
         }
     };
 
-    World.add(engine.world, Composites.stack(52, 10, 10, 5, 1, 1, function(x, y) {
+    World.add(engine.world, Composites.stack(52, 30, 8, 20, 1, 1, function(x, y) {
         if (Query.point([boundary], { x: x, y: y }).length === 0) {
             return Bodies.polygon(x, y, 5, 2, bodyOptions);
         }
