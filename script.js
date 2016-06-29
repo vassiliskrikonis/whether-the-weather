@@ -12,7 +12,7 @@ window.addEventListener("orientationchange", function() {
 
 
 $(document).ready(function() {
-  $('.when').html('').eq(0).html('loading...!');
+  $('.when').html('').eq(0).html('loading...');
   $('body').addClass('loading');
   runPhysics();
 	if ("geolocation" in navigator) {
@@ -25,6 +25,7 @@ $(document).ready(function() {
 	}
 	else
 	  showError('Geolocation is not available');
+
 });
 
 function getWeather() {
@@ -77,22 +78,25 @@ function setIcon(icon) {
   console.log(icon);
   switch (icon) {
     case 'clear-day':
-      $('#icon img').attr('src', 'icons/vintage/sun.svg');
+      $('#icon img').attr('src', 'icons/vintage/sun.svg').css({width: '100%', height: '30vh'});
       break;
     case 'clear-night':
-      $('#icon img').attr('src', 'icons/vintage/moon.svg');
+      $('#icon img').attr('src', 'icons/vintage/moon.svg').css({width: '100%', height: '30vh'});
       break;
     case 'partly-cloudy-day':
-      $('#icon img').attr('src', 'icons/vintage/partly-day.svg');
+      $('#icon img').attr('src', 'icons/vintage/partly-day.svg').css({width: '100%', height: '30vh'});
       break;
     case 'partly-cloudy-night':
-      $('#icon img').attr('src', 'icons/vintage/partly-night.svg');
+      $('#icon img').attr('src', 'icons/vintage/partly-night.svg').css({width: '100%', height: '30vh'});
       break;
     case 'rain':
-      $('#icon img').attr('src', 'icons/vintage/umbrella.svg');
+      $('#icon img').attr('src', 'icons/vintage/umbrella.svg').css({width: '100%', height: '30vh'});
       break;
     case 'cloudy':
-      $('#icon img').attr('src', 'icons/vintage/clouds.svg');
+      $('#icon img').attr('src', 'icons/vintage/clouds.svg').css({width: '100%', height: '30vh'});
+      break;
+    case 'fog':
+      $('#icon img').attr('src', 'icons/vintage/fog-lighthouse1.svg').css({width: '100%', height: '35vh'});
       break;
     default:
       $('#icon img').attr('src', '');
