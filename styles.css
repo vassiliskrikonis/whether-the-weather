@@ -28,19 +28,23 @@ sup {
 	text-align: center;
 	z-index:1;
 }
-#icon img {
-	width: 140px;
-	height: 140px;
+#icon img, #icon canvas {
+	height: 30vh;
+	position: relative;
+	top: 0;
 }
 
 #icon img {
-	right: -70px;
 	z-index: 2;
 }
-
-#icon canvas {
-	display: none;
+.loading #icon canvas {
+	z-index: 1;
+	display: block;
+	margin: 0 auto;
+	top: -30vh;
+	height: 29vh; /* TODO: change svg instead of manually setting height */
 }
+
 
 #details {
 	position: absolute;
@@ -78,10 +82,10 @@ a {
 	}
 }
 
-/*.loading p:not(:first-of-type) {
+.loading p:not(:first-of-type), #icon canvas {
 	display: none;
 }
-.loading #icon img, #icon canvas {
+/*.loading #icon img, #icon canvas {
 	position: relative;
 }
 .loading #icon canvas {
