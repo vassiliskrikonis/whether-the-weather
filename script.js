@@ -12,22 +12,19 @@ window.addEventListener("orientationchange", function() {
 
 
 $(document).ready(function() {
-  // $('.when').html('').eq(0).html('loading...!');
-  // $('body').addClass('loading');
-  // runPhysics();
-	// if ("geolocation" in navigator) {
-	//   /* geolocation is available */
-	//   navigator.geolocation.getCurrentPosition(function(position) {
-	//   	currentPosition.latitude = position.coords.latitude;
-	//   	currentPosition.longitude = position.coords.longitude;
-  //     getWeather();
-	// 	});
-	// }
-	// else
-	//   showError('Geolocation is not available');
-  var icon = document.createElement('img');
-  document.getElementById('icon').appendChild(icon);
-  setIcon('clear-day');
+  $('.when').html('').eq(0).html('loading...');
+  $('body').addClass('loading');
+  runPhysics();
+	if ("geolocation" in navigator) {
+	  /* geolocation is available */
+	  navigator.geolocation.getCurrentPosition(function(position) {
+	  	currentPosition.latitude = position.coords.latitude;
+	  	currentPosition.longitude = position.coords.longitude;
+      getWeather();
+		});
+	}
+	else
+	  showError('Geolocation is not available');
 
 });
 
