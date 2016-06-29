@@ -30,23 +30,40 @@ $(document).ready(function() {
 
 function getWeather() {
   // var defer = $.Deferred();
-  getToday().done(function(result) {
-    console.log('in getToday.done');
+  // getToday().done(function(result) {
+  //   console.log('in getToday.done');
+  //   currentTemp = result.currently.apparentTemperature;
+  //   currentIcon = result.currently.icon;
+  //   getYesterday()
+  //   .done(function(result) {
+  //     console.log('in getTomorrow.done');
+  //     previousTemp = result.currently.apparentTemperature;
+  //     console.log('setting the text');
+  //     if(currentTemp >= previousTemp)
+  //       setText('Today', 'hotter', 'yesterday');
+  //     else
+  //       setText('Today', 'colder', 'yesterday');
+  //     setIcon(currentIcon);
+  //     $('body').removeClass('loading');
+  //   });
+  // });
+  // return defer.promise();
+  getToday()
+  .done(function(result) {
+    console.log('today done');
     currentTemp = result.currently.apparentTemperature;
     currentIcon = result.currently.icon;
-    getTomorrow().done(function(result) {
-      console.log('in getTomorrow.done');
-      previousTemp = result.currently.apparentTemperature;
-      console.log('setting the text');
-      if(currentTemp >= previousTemp)
-        setText('Today', 'hotter', 'yesterday');
-      else
-        setText('Today', 'colder', 'yesterday');
-      setIcon(currentIcon);
-      $('body').removeClass('loading');
-    });
+  })
+  .done(getYesterday)
+  .done(function(result) {
+    console.log('yesterday done');
+    if(currentTemp >= previousTemp)
+      setText('Today', 'hotter', 'yesterday');
+    else
+      setText('Today', 'colder', 'yesterday');
+    setIcon(currentIcon);
+    $('body').removeClass('loading');
   });
-  // return defer.promise();
 }
 
 function getToday() {
@@ -58,8 +75,8 @@ function getToday() {
   });
 }
 
-function getTomorrow() {
-  console.log('in getTomorrow');
+function getYesterday() {
+  console.log('in getYesterday');
   return $.ajax({
     dataType: "jsonp",
     url: 'https://api.forecast.io/forecast/ac85f65c639c545e0acc46a5f678d9fd/'+currentPosition.latitude+','+currentPosition.longitude+',-2400',
