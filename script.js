@@ -33,12 +33,34 @@ function getWeather() {
   var yesterday = getYesterday();
   $.when(today, yesterday)
   .done(function() {
-    if(currentTemp >= previousTemp)
-      setText('Today', 'hotter', 'yesterday');
-    else
-      setText('Today', 'colder', 'yesterday');
-    setIcon(currentIcon);
-    $('body').removeClass('loading');
+    loadIcon(currentIcon).done(function($img) {
+      // Temperatures have been loaded, icon has been loaded
+      // so start fadeOut animation
+      var fadeOut = anime({
+        targets: ['#icon img', '#icon canvas'],
+        opacity: 0,
+        easing: 'easeInExpo',
+        duration: 1000,
+        complete: function() {
+          // once the animation is complete, setText,
+          // change icon src and start icon translateY animation
+          if(currentTemp >= previousTemp)
+            setText('Today', 'hotter', 'yesterday');
+          else
+            setText('Today', 'colder', 'yesterday');
+          $('body').removeClass('loading');
+          $('#icon img').css({
+            width: $img.css('width'),
+            height: $img.css('height')
+          }).attr('src', $img.attr('src'));
+          var iconDown = anime({
+            targets: '#icon img',
+            translateY: ['-200%', 0],
+            opacity: 1
+          });
+        }
+      });
+    });
   })
   .fail(function(err) {
     console.log(err);
@@ -82,7 +104,7 @@ function setText(a, b, c) {
   $('.when').eq(1).html(c);
 }
 
-function setIcon(icon) {
+function loadIcon(icon) {
   // Values:
   //    clear-day,
   //    clear-night,
@@ -94,32 +116,42 @@ function setIcon(icon) {
   //    cloudy,
   //    partly-cloudy-day,
   //    partly-cloudy-night
-  
+
+  var d = $.Deferred();
+
+  var tempImg = $('<img>');
+  tempImg.load(function() {
+    d.resolve($(this));
+  });
+
   switch (icon) {
     case 'clear-day':
-      $('#icon img').attr('src', 'icons/vintage/sun.svg').css({width: '100%', height: '30vh'});
+      tempImg.attr('src', 'icons/vintage/sun.svg').css({width: '100%', height: '30vh'});
       break;
     case 'clear-night':
-      $('#icon img').attr('src', 'icons/vintage/moon.svg').css({width: '100%', height: '30vh'});
+      tempImg.attr('src', 'icons/vintage/moon.svg').css({width: '100%', height: '30vh'});
       break;
     case 'partly-cloudy-day':
-      $('#icon img').attr('src', 'icons/vintage/partly-day.svg').css({width: '100%', height: '30vh'});
+      tempImg.attr('src', 'icons/vintage/partly-day.svg').css({width: '100%', height: '30vh'});
       break;
     case 'partly-cloudy-night':
-      $('#icon img').attr('src', 'icons/vintage/partly-night.svg').css({width: '100%', height: '30vh'});
+      tempImg.attr('src', 'icons/vintage/partly-night.svg').css({width: '100%', height: '30vh'});
       break;
     case 'rain':
-      $('#icon img').attr('src', 'icons/vintage/umbrella.svg').css({width: '100%', height: '30vh'});
+      tempImg.attr('src', 'icons/vintage/umbrella.svg').css({width: '100%', height: '30vh'});
       break;
     case 'cloudy':
-      $('#icon img').attr('src', 'icons/vintage/clouds.svg').css({width: '100%', height: '30vh'});
+      tempImg.attr('src', 'icons/vintage/clouds.svg').css({width: '100%', height: '30vh'});
       break;
     case 'fog':
-      $('#icon img').attr('src', 'icons/vintage/fog-lighthouse1.svg').css({width: '100%', height: '35vh'});
+      tempImg.attr('src', 'icons/vintage/fog-lighthouse1.svg').css({width: '100%', height: '35vh'});
       break;
     default:
-      $('#icon img').attr('src', '');
+      // tempImg.attr('src', '');
+      d.reject();
   }
+
+  return d.promise();
 }
 
 function runPhysics() {
