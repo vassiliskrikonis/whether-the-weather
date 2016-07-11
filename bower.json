@@ -17,7 +17,9 @@
     "tests"
   ],
   "dependencies": {
-    "vminpoly": "*",
-    "Matter": "matter-js#~0.10.0"
+    "jquery": "~1.12.2",
+    "pathseg": "~1.0.2",
+    "matter-js": "~0.10.0",
+    "poly-decomp" : "git://github.com/schteppe/poly-decomp.js#0.1.0"
   }
 }

@@ -4,6 +4,7 @@
   "description": "a simple weather app with a twist",
   "devDependencies": {
     "grunt": "~0.4.1",
+    "grunt-bower-concat": "^1.0.0",
     "grunt-cli": "^1.1.0",
     "grunt-contrib-watch": "~0.5.1",
     "grunt-express": "~1.0.0-beta2",

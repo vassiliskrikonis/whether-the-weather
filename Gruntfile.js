@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   // Load Grunt tasks declared in the package.json file
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-  // Configure Grunt 
+  // Configure Grunt
   grunt.initConfig({
 
     // grunt-express will serve the files from the folders listed in `bases`
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
     watch: {
       all: {
         // Replace with whatever file you want to trigger the update from
-        // Either as a String for a single entry 
+        // Either as a String for a single entry
         // or an Array of String for multiple entries
         // You can use globing patterns like `css/**/*.css`
         // See https://github.com/gruntjs/grunt-contrib-watch#files
@@ -44,8 +44,27 @@ module.exports = function(grunt) {
         // Gets the port from the connect configuration
         path: 'http://localhost:<%= express.all.options.port%>'
       }
+    },
+
+    // bower_concat will concatenate bower files
+    bower_concat: {
+      all: {
+        dest: 'all_bower.js',
+        mainFiles: {
+          'poly-decomp': ['build/decomp.js']
+        },
+        callback: function(mainFiles, component) {
+          return mainFiles.map(function(filepath) {
+            // Use minified files if available
+            var min = filepath.replace(/\.js$/, '.min.js');
+            return grunt.file.exists(min) ? min : filepath;
+          });
+        }
+      }
     }
   });
+
+  grunt.loadNpmTasks('grunt-bower-concat');
 
   // Creates the `server` task
   grunt.registerTask('server', [
