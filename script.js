@@ -33,7 +33,7 @@ function getWeather() {
   var yesterday = getYesterday();
   $.when(today, yesterday)
   .done(function() {
-    loadIcon(currentIcon).done(function($img) {
+    return loadIcon(currentIcon).done(function($img) {
       // Temperatures have been loaded, icon has been loaded
       // so start fadeOut animation
       var fadeOut = anime({
@@ -60,10 +60,10 @@ function getWeather() {
           });
         }
       });
-    });
+    }).fail(function(error_icon) { console.log("don't have this icon", error_icon); });
   })
-  .fail(function(err) {
-    console.log(err);
+  .fail(function() {
+    console.log('trouble getting weather');
   });
 }
 
@@ -148,7 +148,8 @@ function loadIcon(icon) {
       break;
     default:
       // tempImg.attr('src', '');
-      d.reject();
+      console.log('not one of the icons');
+      d.reject(icon);
   }
 
   return d.promise();
