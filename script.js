@@ -49,10 +49,16 @@ function getWeather() {
           else
             setText('Today', 'colder', 'yesterday');
           $('body').removeClass('loading');
-          $('#icon img').css({
-            width: $img.css('width'),
-            height: $img.css('height')
-          }).attr('src', $img.attr('src'));
+          // $('#icon img').css({
+          //   width: $img.css('width'),
+          //   height: $img.css('height')
+          // }).attr('src', $img.attr('src'));
+          $('#icon img').attr('src', $img.attr('src'));
+          if($img.css('width') > 0)
+            $('#icon img').css('width', $img.css('width'));
+          if($img.css('height') > 0)
+            $('#icon img').css('height', $img.css('height'));
+
           var iconDown = anime({
             targets: '#icon img',
             translateY: ['-200%', 0],
@@ -145,6 +151,9 @@ function loadIcon(icon) {
       break;
     case 'fog':
       tempImg.attr('src', 'icons/vintage/fog-lighthouse1.svg').css({width: '100%', height: '35vh'});
+      break;
+    case 'wind':
+      tempImg.attr('src', 'icons/vintage/wind.jpg');
       break;
     default:
       // tempImg.attr('src', '');
