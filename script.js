@@ -2,7 +2,6 @@ var currentPosition = {};
 var currentTemp;
 var currentIcon;
 var previousTemp;
-var toLog = {};
 
 window.addEventListener("orientationchange", function() {
     setTimeout(function()
@@ -34,10 +33,6 @@ function getWeather() {
   var yesterday = getYesterday();
   $.when(today, yesterday)
   .done(function() {
-    var dbRef = firebase.database().ref('weather_logs');
-    dbRef.push(toLog, function() {
-      console.log('successfully pushed to firebase');
-    });
     return loadIcon(currentIcon).done(function($img) {
       // Temperatures have been loaded, icon has been loaded
       // so start fadeOut animation
@@ -86,12 +81,6 @@ var getToday = function() {
     url: 'https://api.forecast.io/forecast/ac85f65c639c545e0acc46a5f678d9fd/'+currentPosition.latitude+','+currentPosition.longitude,
     data: {}
   }).done(function(result) {
-    console.log('todays weather is', result);
-    toLog.time = result.currently.time;
-    toLog.latitude = result.latitude;
-    toLog.longitude = result.longitude;
-    toLog.currentTemp = result.currently.apparentTemperature;
-    toLog.icon = result.currently.icon;
     currentTemp = result.currently.apparentTemperature;
     currentIcon = result.currently.icon;
     d.resolve();
@@ -108,8 +97,6 @@ var getYesterday = function() {
     url: 'https://api.forecast.io/forecast/ac85f65c639c545e0acc46a5f678d9fd/'+currentPosition.latitude+','+currentPosition.longitude+',-2400',
     data: {}
   }).done(function(result) {
-    console.log('previous weather is', result);
-    toLog.yesterdaysTemp = result.currently.apparentTemperature;
     previousTemp = result.currently.apparentTemperature;
     d.resolve();
   }).fail(d.reject);
