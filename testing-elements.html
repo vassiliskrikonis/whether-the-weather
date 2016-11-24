@@ -4,14 +4,31 @@
     <meta charset="utf-8">
     <title>Testing</title>
     <script src="weather-icon.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="css/animations.css">
+    <style media="screen">
+      weather-icon {
+        display: block;
+      }
+      weather-icon {
+        opacity: 0;
+        transform: translate(0, -100%);
+        transition: transform 600ms cubic-bezier(0.130, 0.160, 0.260, 1.350), opacity 600ms linear;
+      }
+      weather-icon.loaded {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+
+
+    </style>
   </head>
   <body>
     <h1>Testing weather icon!</h1>
-    <weather-icon icon="rain" onload="loaded()"></weather-icon>
+    <weather-icon id="icon" icon="rain" onload="loaded()"></weather-icon>
 
     <script type="text/javascript">
       function loaded() {
-        console.log('loaded');
+        document.querySelector('#icon').className = 'loaded';
       }
     </script>
   </body>

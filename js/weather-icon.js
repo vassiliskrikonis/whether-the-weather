@@ -26,6 +26,7 @@ class WeatherIcon extends HTMLElement {
 		img.src = this.folderPath + this.icon.filename;
 		img.setAttribute('alt', this.icon.name);
 		img.setAttribute('title', this.icon.name);
+		img.className = 'icon';
 		img.onload = this._onIconLoad.bind(this);
 		this.appendChild(img);
 	}
