@@ -50,7 +50,8 @@ class WeatherIcon extends HTMLElement {
 	}
 
 	_onIconLoad() {
-		this.dispatchEvent(new Event('load'));
+		this.classList.add('loaded');
+		this.dispatchEvent(new Event('load'));	
 	}
 
 	_kebabToCamelCase(str) {
