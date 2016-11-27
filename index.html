@@ -28,12 +28,13 @@
 
 	<link href='https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/css/styles.css">
-	<script src="js/weather-icon.js" charset="utf-8"></script>
-
+	<script src="node_modules/document-register-element/build/document-register-element.js" charset="utf-8"></script>
+	<script src="js/dist/weather-icon-es5.js" charset="utf-8"></script>
+	<script src="//localhost:35729/livereload.js"></script>
 </head>
 <body>
 	<div class="container">
-		<weather-icon id="icon" icon="rain"></weather-icon>
+		<weather-icon class="icon" icon="rain"></weather-icon>
 		<div id="details">
 			<p><span class="when">Today</span> </p>
 			<p>it's <span id="what">hotter</span><sup>1</sup> </p>
@@ -45,5 +46,9 @@
 			<p><sup>1</sup>According to <a href="http://forecast.io">forecast.io</a></p>
 		</div>
 	</div>
+	<!-- <script type="text/javascript">
+		if(window.chrome)
+			document.querySelector('html').className = 'chrome';
+	</script> -->
 </body>
 </html>

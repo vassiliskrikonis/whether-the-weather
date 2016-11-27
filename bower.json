@@ -7,7 +7,7 @@
   ],
   "license": "MIT",
   "moduleType": [],
-  "homepage": "",
+  "homepage": "https://github.com/vassiliskrikonis/whether-the-weather",
   "private": true,
   "ignore": [
     "**/.*",
@@ -21,6 +21,8 @@
     "pathseg": "~1.0.2",
     "matter-js": "~0.10.0",
     "poly-decomp": "git://github.com/schteppe/poly-decomp.js#0.1.0",
-    "animejs": "*"
+    "animejs": "*",
+    "webcomponentsjs": "^0.7.23",
+    "custom-elements": "webcomponents/custom-elements#^1.0.0-alpha.3"
   }
 }

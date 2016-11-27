@@ -1,9 +1,9 @@
 class WeatherIcon extends HTMLElement {
-	constructor() {
-		super();
+	constructor(self) {
+		self = super(self);
 
-		this.folderPath = 'icons/set2/';
-		this.icons = {
+		self.folderPath = 'icons/set2/';
+		self.icons = {
 			clearDay: 'sun.svg',
 			clearNight: 'moon.svg',
 			rain: 'rain.svg',
@@ -26,7 +26,7 @@ class WeatherIcon extends HTMLElement {
 		img.src = this.folderPath + this.icon.filename;
 		img.setAttribute('alt', this.icon.name);
 		img.setAttribute('title', this.icon.name);
-		img.className = 'icon';
+		img.className = 'weather-icon';
 		img.onload = this._onIconLoad.bind(this);
 		this.appendChild(img);
 	}
@@ -58,4 +58,4 @@ class WeatherIcon extends HTMLElement {
 	}
 }
 
-window.customElements.define('weather-icon', WeatherIcon);
+customElements.define('weather-icon', WeatherIcon);
