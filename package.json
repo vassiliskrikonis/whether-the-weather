@@ -1,21 +1,13 @@
 {
   "name": "weather",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "a simple weather app with a twist",
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-bower-concat": "^1.0.0",
-    "grunt-cli": "^1.1.0",
-    "grunt-contrib-watch": "~0.5.1",
-    "grunt-express": "~1.0.0-beta2",
-    "grunt-open": "~0.2.1",
-    "matchdep": "~0.1.2"
+    "parcel-bundler": "^1.9.3"
   },
   "scripts": {
-    "server": "grunt server"
+    "dev": "parcel index.html"
   },
   "author": "Vassilis Krikonis",
-  "dependencies": {
-    "poly-decomp": "git://github.com/schteppe/poly-decomp.js.git"
-  }
+  "dependencies": {}
 }
