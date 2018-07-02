@@ -9,5 +9,7 @@
     "dev": "parcel index.html"
   },
   "author": "Vassilis Krikonis",
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }
