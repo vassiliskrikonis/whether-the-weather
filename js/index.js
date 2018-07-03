@@ -1,4 +1,5 @@
 import axios from 'axios';
+import icons from './icon-mapper';
 
 try {
   navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
@@ -10,11 +11,13 @@ catch(err) {
 function onGeoSuccess(pos) {
   const {latitude, longitude} = pos.coords;
   console.log(`Received geolocation: lat: ${latitude}, lon: ${longitude}`);
+  const now = new Date();
+  console.log(`Time is ${now.toISOString()}`);
 
   const options = {
     latitude,
     longitude,
-    time: (new Date()).toISOString()
+    time: now.toISOString()
   }
 
   axios.post('https://weather-the-weather-proxy.glitch.me/', options)
@@ -33,6 +36,7 @@ function onGeoSuccess(pos) {
       <div class="when">yesterday</div>
     `;
 
+    document.getElementById('logo').src = icons[icon];
     document.querySelector('.info').innerHTML = infoHtml;
   })
   .catch(console.warn)
