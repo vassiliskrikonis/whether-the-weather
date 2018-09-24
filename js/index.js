@@ -2,16 +2,28 @@ import axios from 'axios';
 import icons from './icon-mapper';
 import {DateTime} from 'luxon';
 
+function setInfo(str) {
+    document.querySelector('.info').innerHTML = str;
+}
+
 try {
-  navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
+  const delay = process.env.NODE_ENV === 'development' ? 2000 : 0;
+  navigator.geolocation.getCurrentPosition(delayed(delay, onGeoSuccess), onGeoError);
+  setInfo('Getting Location...');
 }
 catch(err) {
   document.body.innerHTML = '<p style="text-align:center;">Geolocation is not supported</p>';
 }
 
+function delayed(ms, fn) {
+  return (...args) => setTimeout(() => fn(...args), ms);
+}
+
 function onGeoSuccess(pos) {
   const {latitude, longitude} = pos.coords;
   console.log(`Received geolocation: lat: ${latitude}, lon: ${longitude}`);
+  setInfo('Getting Weather...');
+
   const now = DateTime.local().toString();
   console.log(`Time is ${now}`);
 
@@ -37,8 +49,12 @@ function onGeoSuccess(pos) {
       <div class="when">yesterday</div>
     `;
 
-    document.getElementById('logo').src = icons[icon];
-    document.querySelector('.info').innerHTML = infoHtml;
+    const logo = document.getElementById('logo')
+    logo.src = icons[icon];
+    logo.onload = () => {
+      document.body.classList.remove('loading');
+      document.querySelector('.info').innerHTML = infoHtml;
+    };
   })
   .catch(console.warn)
 }

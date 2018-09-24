@@ -45,6 +45,20 @@ main {
   margin-bottom: 1em;
 }
 
+.loading #logo {
+  animation: rotating-logo 4s infinite ease-in-out;
+}
+
+@keyframes rotating-logo {
+  from {
+    transform: rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
 
 footer {
   position: absolute;
