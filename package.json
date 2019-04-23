@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "a simple weather app with a twist",
   "devDependencies": {
-    "parcel-bundler": "^1.9.3"
+    "parcel-bundler": ">=1.10.0"
   },
   "scripts": {
     "dev": "parcel index.html",
