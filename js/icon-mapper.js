@@ -19,7 +19,7 @@ const icons = {
   "fog": fog,
   "cloudy": cloud,
   "partly-cloudy-day": cloudyDay,
-  "partly-cloudy-night": cloudyNight,
+  "partly-cloudy-night": cloudyNight
 };
 
 export default icons;

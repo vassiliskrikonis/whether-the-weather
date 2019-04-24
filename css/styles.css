@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
@@ -7,12 +8,14 @@ html, body {
   box-sizing: border-box;
 }
 
-a, a:visited, a:focus {
+a,
+a:visited,
+a:focus {
   color: inherit;
 }
 
 body {
-  font-family: 'Libre Baskerville', serif;
+  font-family: "Libre Baskerville", serif;
   height: 100vh;
   position: relative;
   margin: 0 10%;
@@ -49,7 +52,7 @@ main {
   animation: rotating-logo 4s infinite ease-in-out;
 }
 body:not(.loading) #logo {
-  animation: slide-in-blurred-top 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+  animation: slide-in-blurred-top 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
 footer {
@@ -60,7 +63,6 @@ footer {
   font-size: 0.3em;
   width: 100%;
 }
-
 
 @keyframes rotating-logo {
   from {
