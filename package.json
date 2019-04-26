@@ -16,7 +16,8 @@
   "scripts": {
     "dev": "parcel index.html",
     "dev-https": "parcel index.html --https",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "deploy": "surge dist --domain https://vassiliskrikonis-weather.surge.sh/"
   },
   "author": "Vassilis Krikonis",
   "dependencies": {
