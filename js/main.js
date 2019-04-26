@@ -14,9 +14,11 @@ function getLocation() {
   return new Promise((resolve, reject) => {
     try {
       const delay = process.env.NODE_ENV === "development" ? 2000 : 0;
-      navigator.geolocation.getCurrentPosition(delayed(delay, resolve), reject);
+      navigator.geolocation.getCurrentPosition(delayed(delay, resolve), posError => {
+        reject(posError.message);
+      });
     } catch (err) {
-      reject(`<p style="text-align:center;">Geolocation is not supported</p>`);
+      reject("Geolocation is not supported");
     }
   });
 }
