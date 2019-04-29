@@ -1,21 +1,21 @@
 {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "cypress/globals": true
   },
-  "extends": ["eslint:recommended"],
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
+  "extends": ["eslint:recommended", "plugin:cypress/recommended"],
+  "plugins": ["cypress"],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "process": "readonly"
+  },
   "rules": {
     "no-console": "off"
-  },
-  "globals": {
-    "process": "readonly"
   }
 }
