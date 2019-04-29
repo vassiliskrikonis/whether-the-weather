@@ -2,8 +2,12 @@ import axios from "axios";
 import icons from "./icon-mapper";
 import { DateTime } from "luxon";
 
-function setInfo(str) {
-  document.querySelector(".info").innerHTML = str;
+function setInfo(str, extraClass) {
+  const infoElem = document.querySelector(".info");
+  infoElem.innerHTML = str;
+  if (extraClass) {
+    infoElem.classList.add(extraClass);
+  }
 }
 
 function delayed(ms, fn) {
@@ -34,6 +38,9 @@ function getWeather({ longitude, latitude }) {
   const requestPromise = axios
     .post("https://weather-the-weather-proxy.glitch.me/", options)
     .then(response => {
+      if (!(response.data instanceof Array)) {
+        throw new Error("cannot parse data");
+      }
       const [today, yesterday] = response.data;
       const todaysTemp = today.currently.apparentTemperature;
       const icon = today.currently.icon;
@@ -80,6 +87,6 @@ function loadIcon(icon) {
     `;
     setInfo(infoHtml);
   } catch (err) {
-    setInfo(err);
+    setInfo(err, "error");
   }
 })();
