@@ -19,7 +19,8 @@ describe("Whether the Weather App", function() {
         },
         {
           currently: {
-            apparentTemperature: yesterday
+            apparentTemperature: yesterday,
+            icon: icon
           }
         }
       ]);
@@ -108,6 +109,16 @@ describe("Whether the Weather App", function() {
   });
 
   context("when weather api is not working correctly", function() {
+    beforeEach(function() {
+      cy.visit("/", {
+        onBeforeLoad(win) {
+          cy.stub(win.navigator.geolocation, "getCurrentPosition", cb => {
+            cb(mockLocation);
+          }).as("mockGeolocation");
+        }
+      });
+    });
+
     it("shows error when api is unavailable", function() {
       cy.server();
       cy.route({
@@ -117,8 +128,7 @@ describe("Whether the Weather App", function() {
         response: { error: "Error" }
       });
 
-      cy.visit("/")
-        .get(".info")
+      cy.get(".info")
         .should("contain", "Error")
         .and("have.class", "error");
     });
@@ -132,9 +142,8 @@ describe("Whether the Weather App", function() {
         response: { foo: "bar" }
       });
 
-      cy.visit("/")
-        .get(".info")
-        .should("contain", "cannot parse data")
+      cy.get(".info")
+        .should("contain", "Cannot parse weather data")
         .and("have.class", "error");
     });
   });
