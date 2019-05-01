@@ -1,6 +1,7 @@
 import axios from "axios";
 import icons from "./icon-mapper";
 import { DateTime } from "luxon";
+import * as yup from "yup";
 
 function setInfo(str, extraClass) {
   const infoElem = document.querySelector(".info");
@@ -27,6 +28,30 @@ function getLocation() {
   });
 }
 
+const API_URL = "https://weather-the-weather-proxy.glitch.me/";
+const weatherResponseSchema = yup.object().shape({
+  data: yup
+    .array()
+    .of(
+      yup.object().shape({
+        currently: yup.object().shape({
+          apparentTemperature: yup.number().required(),
+          icon: yup.string().required()
+        })
+      })
+    )
+    .required()
+});
+
+function validateWeatherSchema(response) {
+  try {
+    return weatherResponseSchema.validateSync(response);
+  } catch (err) {
+    console.error(err);
+    throw new Error("Cannot parse weather data");
+  }
+}
+
 function getWeather({ longitude, latitude }) {
   const now = DateTime.local().toString();
   const options = {
@@ -36,11 +61,10 @@ function getWeather({ longitude, latitude }) {
   };
 
   const requestPromise = axios
-    .post("https://weather-the-weather-proxy.glitch.me/", options)
+    .post(API_URL, options)
+    .then(validateWeatherSchema)
     .then(response => {
-      if (!(response.data instanceof Array)) {
-        throw new Error("cannot parse data");
-      }
+      // checkIfResponseIsValid(response);
       const [today, yesterday] = response.data;
       const todaysTemp = today.currently.apparentTemperature;
       const icon = today.currently.icon;
