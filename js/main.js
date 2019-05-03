@@ -114,3 +114,11 @@ function loadIcon(icon) {
     setInfo(err, "error");
   }
 })();
+
+function onResize() {
+  document.querySelector("body").style.setProperty("height", window.innerHeight + "px");
+}
+
+["load", "resize", "orientationchange"].forEach(event => {
+  window.addEventListener(event, onResize);
+});
