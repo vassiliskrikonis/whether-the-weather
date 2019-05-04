@@ -122,3 +122,9 @@ function onResize() {
 ["load", "resize", "orientationchange"].forEach(event => {
   window.addEventListener(event, onResize);
 });
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/service-worker.js");
+  });
+}
