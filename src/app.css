@@ -1,0 +1,17 @@
+.weather-app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 30px;
+}
+
+.weather-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.weather-info {
+  font-size: 1rem;
+}

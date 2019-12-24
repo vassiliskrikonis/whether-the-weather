@@ -7,6 +7,7 @@
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-cypress": "^2.8.1",
+    "eslint-plugin-react": "^7.17.0",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
     "parcel-bundler": ">=1.12.4",
@@ -29,7 +30,10 @@
   "dependencies": {
     "assets": "^3.0.1",
     "axios": "^0.19.0",
+    "css": "^2.2.4",
     "luxon": "^1.21.3",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "yup": "^0.28.0"
   },
   "husky": {
@@ -38,7 +42,7 @@
     }
   },
   "lint-staged": {
-    "*.js": [
+    "*.(js|jsx)": [
       "prettier --write",
       "eslint --fix",
       "git add"

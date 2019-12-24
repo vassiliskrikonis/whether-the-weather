@@ -4,11 +4,12 @@
     "es6": true,
     "cypress/globals": true
   },
-  "extends": ["eslint:recommended", "plugin:cypress/recommended"],
-  "plugins": ["cypress"],
+  "extends": ["eslint:recommended", "plugin:cypress/recommended", "plugin:react/recommended"],
+  "plugins": ["cypress", "react"],
   "parserOptions": {
     "ecmaVersion": 2018,
-    "sourceType": "module"
+    "sourceType": "module",
+    "jsx": true
   },
   "globals": {
     "Atomics": "readonly",
