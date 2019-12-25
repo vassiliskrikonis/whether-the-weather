@@ -5,6 +5,7 @@ import Footer from "./footer";
 import "./app.css";
 import { DateTime } from "luxon";
 import axios from "axios";
+import Icon from "./icon";
 
 // eslint-disable-next-line no-unused-vars
 function useGeoLocation() {
@@ -52,10 +53,13 @@ function useDarkSky(location) {
 }
 
 const App = () => {
+  const location = useGeoLocation();
+  const { icon } = useDarkSky(location);
+
   return (
     <div className="weather-app">
       <div className="weather-wrapper">
-        <div className="weather-icon">This should be an icon</div>
+        <Icon icon={icon || "loading"} />
         <div className="weather-info">This should be the weather</div>
       </div>
       <Footer />

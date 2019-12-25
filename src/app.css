@@ -9,7 +9,14 @@
 .weather-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
   height: 100%;
+}
+.weather-wrapper > * {
+  margin-top: 2rem;
+}
+.weather-wrapper > *:first-child {
+  margin-top: 1rem;
 }
 
 .weather-info {

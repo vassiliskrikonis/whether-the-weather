@@ -17,6 +17,7 @@
     "process": "readonly"
   },
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "react/prop-types": 1
   }
 }

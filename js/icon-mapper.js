@@ -8,6 +8,7 @@ import fog from "../assets/noun_fog_193897.svg";
 import cloud from "../assets/noun_Cloud_193891.svg";
 import cloudyDay from "../assets/noun_cloudy day_193896.svg";
 import cloudyNight from "../assets/noun_Cloudy Night_193892.svg";
+import hourglass from "../assets/noun_hourglass_1403095.svg";
 
 const icons = {
   "clear-day": sun,
@@ -19,7 +20,8 @@ const icons = {
   "fog": fog,
   "cloudy": cloud,
   "partly-cloudy-day": cloudyDay,
-  "partly-cloudy-night": cloudyNight
+  "partly-cloudy-night": cloudyNight,
+  "loading": hourglass
 };
 
 export default icons;
