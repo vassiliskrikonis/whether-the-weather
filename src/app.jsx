@@ -11,18 +11,19 @@ import { AnimateOnChange } from "react-animation";
 
 function useGeoLocation() {
   const [location, setLocation] = useState(null);
+  const [error, setError] = useState(null);
   useEffect(() => {
     const onSuccess = ({ coords: { latitude, longitude } }) => {
       setLocation({ longitude, latitude });
     };
     const onError = error => {
-      throw error;
+      setError(error);
     };
 
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
   }, []);
 
-  return location;
+  return [location, error];
 }
 
 function useDarkSky(location) {
@@ -31,6 +32,7 @@ function useDarkSky(location) {
     yesterday: null
   });
   const [icon, setIcon] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!location) return;
@@ -39,30 +41,35 @@ function useDarkSky(location) {
     const now = DateTime.local().toString();
     const { latitude, longitude } = location;
 
-    axios.post(API_URL, { time: now, latitude, longitude }).then(response => {
-      const [today, yesterday] = response.data;
-      const todaysTemp = today.currently.apparentTemperature;
-      const icon = today.currently.icon;
-      const yesterdaysTemp = yesterday.currently.apparentTemperature;
+    axios
+      .post(API_URL, { time: now, latitude, longitude })
+      .then(response => {
+        const [today, yesterday] = response.data;
+        const todaysTemp = today.currently.apparentTemperature;
+        const icon = today.currently.icon;
+        const yesterdaysTemp = yesterday.currently.apparentTemperature;
 
-      setTemperatures({
-        today: todaysTemp,
-        yesterday: yesterdaysTemp
-      });
-      setIcon(icon);
-    });
+        setTemperatures({
+          today: todaysTemp,
+          yesterday: yesterdaysTemp
+        });
+        setIcon(icon);
+      })
+      .catch(error => setError(error));
   }, [location]);
 
-  return { temperatures, icon };
+  return { temperatures, icon, error };
 }
 
 const App = () => {
-  const location = useGeoLocation();
+  const [location, locationError] = useGeoLocation();
   const {
     icon,
-    temperatures: { today: todaysTemp, yesterday: yesterdaysTemp }
+    temperatures: { today: todaysTemp, yesterday: yesterdaysTemp },
+    error: darkSkyError
   } = useDarkSky(location);
   const loaded = [icon, todaysTemp, yesterdaysTemp].every(v => v !== null);
+  const error = (locationError && locationError.message) || (darkSkyError && darkSkyError.message);
 
   const renderedIcon = useMemo(() => <Icon key={icon} icon={icon || "loading"} />, [icon]);
   const renderedInfo = useMemo(() => {
@@ -73,7 +80,7 @@ const App = () => {
     <div className="weather-app">
       <div className="weather-wrapper">
         <AnimateOnChange>{renderedIcon}</AnimateOnChange>
-        <AnimateOnChange>{renderedInfo}</AnimateOnChange>
+        <AnimateOnChange>{error ? <p className="error">{error}</p> : renderedInfo}</AnimateOnChange>
       </div>
       <Footer />
     </div>
