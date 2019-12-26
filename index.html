@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>whether the weather</title>
-    <link rel="stylesheet" href="css/styles.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"
       rel="stylesheet"
@@ -18,16 +17,8 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body class="loading">
-    <main>
-      <img src="assets/noun_hourglass_1403095.svg" alt="" id="logo" />
-      <div class="info">
-        <div>Loading...</div>
-      </div>
-    </main>
-    <footer>
-      <sup>1</sup>According to <a href="https://darksky.net/poweredby/" target="_blank">Dark Sky</a>
-    </footer>
-    <script src="js/main.js" charset="utf-8"></script>
+  <body>
+    <div id="app"></div>
+    <script src="src/app.jsx" charset="utf-8"></script>
   </body>
 </html>

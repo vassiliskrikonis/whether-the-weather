@@ -1,3 +1,4 @@
+/* eslint-disable */
 import axios from "axios";
 import icons from "./icon-mapper";
 import { DateTime } from "luxon";
@@ -13,19 +14,6 @@ function setInfo(str, extraClass) {
 
 function delayed(ms, fn) {
   return (...args) => setTimeout(() => fn(...args), ms);
-}
-
-function getLocation() {
-  return new Promise((resolve, reject) => {
-    try {
-      const delay = process.env.NODE_ENV === "development" ? 2000 : 0;
-      navigator.geolocation.getCurrentPosition(delayed(delay, resolve), posError => {
-        reject(posError.message);
-      });
-    } catch (err) {
-      reject("Geolocation is not supported");
-    }
-  });
 }
 
 const API_URL = "https://weather-the-weather-proxy.glitch.me/";
