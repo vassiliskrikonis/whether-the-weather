@@ -1,0 +1,16 @@
+.weather-info {
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.weather-info sup {
+  font-size: 0.5em;
+}
+
+.weather-info .when {
+  font-style: italic;
+}
+
+.weather-info .what {
+  font-weight: bold;
+}

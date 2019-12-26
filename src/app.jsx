@@ -6,8 +6,8 @@ import "./app.css";
 import { DateTime } from "luxon";
 import axios from "axios";
 import Icon from "./icon";
+import Info from "./info";
 
-// eslint-disable-next-line no-unused-vars
 function useGeoLocation() {
   const [location, setLocation] = useState(null);
   useEffect(() => {
@@ -24,7 +24,6 @@ function useGeoLocation() {
   return location;
 }
 
-// eslint-disable-next-line no-unused-vars
 function useDarkSky(location) {
   const [todaysTemp, setTodaysTemp] = useState(null);
   const [yesterdaysTemp, setYesterdaysTemp] = useState(null);
@@ -54,13 +53,14 @@ function useDarkSky(location) {
 
 const App = () => {
   const location = useGeoLocation();
-  const { icon } = useDarkSky(location);
+  const { icon, todaysTemp, yesterdaysTemp } = useDarkSky(location);
+  const loaded = [icon, todaysTemp, yesterdaysTemp].every(v => v !== null);
 
   return (
     <div className="weather-app">
       <div className="weather-wrapper">
         <Icon icon={icon || "loading"} />
-        <div className="weather-info">This should be the weather</div>
+        {loaded ? <Info today={todaysTemp} yesterday={yesterdaysTemp} /> : <p>Loading...</p>}
       </div>
       <Footer />
     </div>
