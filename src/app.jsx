@@ -8,22 +8,24 @@ import axios from "axios";
 import Icon from "./icon";
 import Info from "./info";
 import { AnimateOnChange } from "react-animation";
+import ErrorBoundary from "./error-boundary";
 
 function useGeoLocation() {
   const [location, setLocation] = useState(null);
-  const [error, setError] = useState(null);
   useEffect(() => {
     const onSuccess = ({ coords: { latitude, longitude } }) => {
       setLocation({ longitude, latitude });
     };
     const onError = error => {
-      setError(error);
+      setLocation(() => {
+        throw error;
+      });
     };
 
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
   }, []);
 
-  return [location, error];
+  return location;
 }
 
 function useDarkSky(location) {
@@ -32,7 +34,6 @@ function useDarkSky(location) {
     yesterday: null
   });
   const [icon, setIcon] = useState(null);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!location) return;
@@ -55,21 +56,23 @@ function useDarkSky(location) {
         });
         setIcon(icon);
       })
-      .catch(error => setError(error));
+      .catch(error => {
+        setTemperatures(() => {
+          throw error;
+        });
+      });
   }, [location]);
 
-  return { temperatures, icon, error };
+  return { temperatures, icon };
 }
 
 const App = () => {
-  const [location, locationError] = useGeoLocation();
+  const location = useGeoLocation();
   const {
     icon,
-    temperatures: { today: todaysTemp, yesterday: yesterdaysTemp },
-    error: darkSkyError
+    temperatures: { today: todaysTemp, yesterday: yesterdaysTemp }
   } = useDarkSky(location);
   const loaded = [icon, todaysTemp, yesterdaysTemp].every(v => v !== null);
-  const error = (locationError && locationError.message) || (darkSkyError && darkSkyError.message);
 
   const renderedIcon = useMemo(() => <Icon key={icon} icon={icon || "loading"} />, [icon]);
   const renderedInfo = useMemo(() => {
@@ -80,11 +83,16 @@ const App = () => {
     <div className="weather-app">
       <div className="weather-wrapper">
         <AnimateOnChange>{renderedIcon}</AnimateOnChange>
-        <AnimateOnChange>{error ? <p className="error">{error}</p> : renderedInfo}</AnimateOnChange>
+        <AnimateOnChange>{renderedInfo}</AnimateOnChange>
       </div>
       <Footer />
     </div>
   );
 };
 
-ReactDom.render(React.createElement(App), document.getElementById("app"));
+ReactDom.render(
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>,
+  document.getElementById("app")
+);
