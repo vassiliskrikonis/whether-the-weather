@@ -9,6 +9,21 @@ import Icon from "./icon";
 import Info from "./info";
 import { AnimateOnChange } from "react-animation";
 import ErrorBoundary from "./error-boundary";
+import * as yup from "yup";
+
+const weatherResponseSchema = yup.object().shape({
+  data: yup
+    .array()
+    .of(
+      yup.object().shape({
+        currently: yup.object().shape({
+          apparentTemperature: yup.number().required(),
+          icon: yup.string().required()
+        })
+      })
+    )
+    .required()
+});
 
 function useGeoLocation() {
   const [location, setLocation] = useState(null);
@@ -45,6 +60,11 @@ function useDarkSky(location) {
     axios
       .post(API_URL, { time: now, latitude, longitude })
       .then(response => {
+        if (!weatherResponseSchema.isValidSync(response)) {
+          setTemperatures(() => {
+            throw new Error("Could not parse weather data");
+          });
+        }
         const [today, yesterday] = response.data;
         const todaysTemp = today.currently.apparentTemperature;
         const icon = today.currently.icon;
