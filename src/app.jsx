@@ -38,7 +38,7 @@ function useDarkSky(location) {
   useEffect(() => {
     if (!location) return;
 
-    const API_URL = "https://weather-the-weather-proxy.glitch.me/";
+    const API_URL = "/api/darksky-all";
     const now = DateTime.local().toString();
     const { latitude, longitude } = location;
 

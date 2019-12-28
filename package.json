@@ -18,10 +18,10 @@
     "since 2017-06"
   ],
   "scripts": {
-    "dev": "parcel index.html",
+    "dev": "parcel -p $PORT index.html",
     "dev-https": "parcel index.html --https",
-    "build": "parcel build index.html",
-    "deploy": "surge dist --domain https://vassiliskrikonis-weather.surge.sh/",
+    "build": "parcel build index.html -d ./public",
+    "deploy": "surge ./public --domain https://vassiliskrikonis-weather.surge.sh/",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
     "test:e2e": "start-server-and-test dev :1234 cy:run"
