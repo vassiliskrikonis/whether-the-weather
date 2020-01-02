@@ -45,7 +45,7 @@ export function useDarkSky(location) {
   useEffect(() => {
     if (!location) return;
 
-    const API_URL = "/api/darksky-all";
+    const API_URL = process.env.API_URL || "/api/darksky-all";
     const now = DateTime.local().toString();
     const { latitude, longitude } = location;
 

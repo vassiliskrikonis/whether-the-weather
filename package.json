@@ -19,6 +19,7 @@
   ],
   "scripts": {
     "dev": "parcel -p $PORT index.html",
+    "dev-local": "parcel index.html",
     "dev-https": "parcel index.html --https",
     "build": "parcel build index.html -d ./public",
     "deploy": "surge ./public --domain https://vassiliskrikonis-weather.surge.sh/",
