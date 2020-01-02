@@ -17,7 +17,6 @@ const App = () => {
   } = useDarkSky(location);
   const loaded = [icon, todaysTemp, yesterdaysTemp].every(v => v !== null);
 
-  const renderedIcon = useMemo(() => <Icon key={icon} icon={icon || "loading"} />, [icon]);
   const renderedInfo = useMemo(() => {
     return loaded ? <Info today={todaysTemp} yesterday={yesterdaysTemp} /> : <p>Loading...</p>;
   }, [loaded]);
@@ -25,7 +24,7 @@ const App = () => {
   return (
     <div className="weather-app">
       <div className="weather-wrapper">
-        <AnimateOnChange>{renderedIcon}</AnimateOnChange>
+        <Icon icon={icon} />
         <AnimateOnChange>{renderedInfo}</AnimateOnChange>
       </div>
       <Footer />
