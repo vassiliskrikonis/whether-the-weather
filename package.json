@@ -11,6 +11,7 @@
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
     "parcel-bundler": ">=1.12.4",
+    "parcel-plugin-sw-cache": "^0.3.1",
     "prettier": "^1.19.1",
     "start-server-and-test": "^1.10.6"
   },
@@ -51,6 +52,24 @@
     ],
     "*.css": [
       "prettier --write"
+    ]
+  },
+  "cache": {
+    "globPatterns": [
+      "**/*.{html,js,css,jpg,png,gif,svg,eot,ttf,woff,woff2}"
+    ],
+    "runtimeCaching": [
+      {
+        "urlPattern": ["^https:\/\/fonts\\.gstatic\\.com"],
+        "handler": "CacheFirst",
+        "options": {
+          "cacheName": "google-fonts-webfonts",
+          "expiration": {
+            "maxAgeSeconds": 31536000,
+            "maxEntries": 30
+          }
+        }
+      }
     ]
   }
 }
