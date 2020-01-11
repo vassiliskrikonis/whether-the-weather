@@ -37,6 +37,7 @@
     "react": "^16.12.0",
     "react-animation": "^1.2.2",
     "react-dom": "^16.12.0",
+    "styled-components": "^4.4.1",
     "yup": "^0.28.0"
   },
   "husky": {
@@ -60,7 +61,9 @@
     ],
     "runtimeCaching": [
       {
-        "urlPattern": ["^https:\/\/fonts\\.gstatic\\.com"],
+        "urlPattern": [
+          "^https://fonts\\.gstatic\\.com"
+        ],
         "handler": "CacheFirst",
         "options": {
           "cacheName": "google-fonts-webfonts",

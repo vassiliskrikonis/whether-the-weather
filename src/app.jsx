@@ -1,13 +1,53 @@
 import React, { useMemo } from "react";
 import ReactDom from "react-dom";
-import "../css/styles.css";
 import Footer from "./footer";
-import "./app.css";
 import { useGeoLocation, useDarkSky } from "./hooks";
 import Icon from "./icon";
 import Info from "./info";
 import { AnimateOnChange } from "react-animation";
 import ErrorBoundary from "./error-boundary";
+import styled, { createGlobalStyle } from "styled-components";
+
+const GlobalStyles = createGlobalStyle`
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a,
+a:visited,
+a:focus {
+  color: inherit;
+}
+
+html {
+  font-family: "Libre Baskerville", serif;
+  font-size: 4vh;
+}
+`;
+
+const AppDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 30px;
+
+  .weather-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+  }
+  .weather-wrapper > * {
+    margin-top: 1rem;
+  }
+`;
 
 const App = () => {
   const location = useGeoLocation();
@@ -22,13 +62,14 @@ const App = () => {
   }, [loaded]);
 
   return (
-    <div className="weather-app">
+    <AppDiv>
+      <GlobalStyles />
       <div className="weather-wrapper">
         <Icon icon={icon} />
         <AnimateOnChange>{renderedInfo}</AnimateOnChange>
       </div>
       <Footer />
-    </div>
+    </AppDiv>
   );
 };
 

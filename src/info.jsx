@@ -1,9 +1,26 @@
 import React from "react";
-import "./info.css";
+import styled from "styled-components";
+
+const StyledP = styled.p`
+  font-size: 1.3rem;
+  text-align: center;
+  margin: 0;
+
+  sup {
+    font-size: 0.5em;
+  }
+  .when {
+    font-style: italic;
+  }
+
+  .what {
+    font-weight: 700;
+  }
+`;
 
 const Info = ({ today, yesterday }) => {
   return (
-    <p className="weather-info">
+    <StyledP>
       <span className="when">Today</span>
       <br />
       it&apos;s <span className="what">{today > yesterday ? "hotter" : "colder"}</span>
@@ -12,7 +29,7 @@ const Info = ({ today, yesterday }) => {
       than
       <br />
       <span className="when">yesterday</span>
-    </p>
+    </StyledP>
   );
 };
 
