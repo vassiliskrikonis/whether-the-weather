@@ -13,8 +13,5 @@
   height: 100%;
 }
 .weather-wrapper > * {
-  margin-top: 2rem;
-}
-.weather-wrapper > *:first-child {
   margin-top: 1rem;
 }

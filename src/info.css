@@ -1,6 +1,7 @@
 .weather-info {
   font-size: 1.3rem;
   text-align: center;
+  margin: 0;
 }
 
 .weather-info sup {
