@@ -3,18 +3,17 @@ import React from "react";
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { error: null };
   }
 
   static getDerivedStateFromError(error) {
     return {
-      hasError: true,
       error
     };
   }
 
   render() {
-    if (this.state.hasError) {
+    if (this.state.error) {
       const errorStyles = {
         display: "inline-block",
         width: "100%",
