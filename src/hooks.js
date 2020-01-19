@@ -29,7 +29,11 @@ export function useGeoLocation() {
       });
     };
 
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    try {
+      navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    } catch (_) {
+      throw new Error("Geolocation not supported");
+    }
   }, []);
 
   return location;
@@ -70,7 +74,12 @@ export function useDarkSky(location) {
       })
       .catch(error => {
         setTemperatures(() => {
-          throw error;
+          const msg = error.response && error.response.data && error.response.data.error;
+          if (msg) {
+            throw new Error(msg);
+          } else {
+            throw error;
+          }
         });
       });
   }, [location]);
