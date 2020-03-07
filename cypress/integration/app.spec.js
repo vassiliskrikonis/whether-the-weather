@@ -1,5 +1,5 @@
 describe("Whether the Weather App", function() {
-  const mockLocation = {
+  const dummyLocation = {
     coords: {
       latitude: 12.34,
       longitude: 12.12
@@ -8,6 +8,14 @@ describe("Whether the Weather App", function() {
   const apiUrl = "https://weather-the-weather-proxy.glitch.me/";
 
   context("when everything works fine", function() {
+    beforeEach(function() {
+      cy.on("window:before:load", win => {
+        cy.stub(win.navigator.geolocation, "getCurrentPosition", cb => {
+          cb(dummyLocation);
+        }).as("mockGeolocation");
+      });
+    });
+
     function mockWeather(today, yesterday, icon = "partly-cloudy-day") {
       cy.server();
       cy.route("POST", apiUrl, [
@@ -23,44 +31,40 @@ describe("Whether the Weather App", function() {
             icon: icon
           }
         }
-      ]);
+      ]).as("postWeather");
     }
-
-    beforeEach(function() {
-      cy.visit("/", {
-        onBeforeLoad(win) {
-          cy.stub(win.navigator.geolocation, "getCurrentPosition", cb => {
-            cb(mockLocation);
-          }).as("mockGeolocation");
-        }
-      });
-    });
 
     it("shows if today is colder than yesterday", function() {
       mockWeather(40, 41);
+      cy.visit("/");
 
-      cy.contains("Getting Location");
-      cy.contains("Getting Weather");
-      cy.get("#logo")
+      cy.contains("Loading...");
+      cy.get(".icon")
         .should("have.attr", "src")
         .and("match", /noun_cloudy day.*\.svg/);
-      cy.get(".info").should("contain", "colder");
+      cy.get(".what").should("contain", "colder");
       cy.get("footer").should("be.visible");
     });
 
     it("shows if today is hotter than yesterday", function() {
       mockWeather(42, 41);
+      cy.visit("/");
 
-      cy.contains("Getting Location");
-      cy.contains("Getting Weather");
-      cy.get("#logo")
+      cy.contains("Loading...");
+      cy.get(".icon")
         .should("have.attr", "src")
         .and("match", /noun_cloudy day.*\.svg/);
-      cy.get(".info").should("contain", "hotter");
+      cy.get(".what").should("contain", "hotter");
     });
   });
 
   context("when geolocation is not available", function() {
+    beforeEach(function() {
+      cy.on("uncaught:exception", () => {
+        return false;
+      });
+    });
+
     it("shows error when geolocation is not supported in browser", function() {
       cy.visit("/", {
         onBeforeLoad(win) {
@@ -68,9 +72,7 @@ describe("Whether the Weather App", function() {
         }
       });
 
-      cy.get(".info")
-        .should("contain", "Geolocation is not supported")
-        .and("have.class", "error");
+      cy.contains("Geolocation not supported");
     });
 
     it("shows error when geolocation is denied", function() {
@@ -79,15 +81,13 @@ describe("Whether the Weather App", function() {
           cy.stub(win.navigator.geolocation, "getCurrentPosition", (_, cb) => {
             cb({
               code: 1, // PERMISSION_DENIED
-              message: "Not available"
+              message: "Denied"
             });
           });
         }
       });
 
-      cy.get(".info")
-        .should("have.text", "Not available")
-        .and("have.class", "error");
+      cy.contains("Denied");
     });
 
     it("shows error when geolocation times out", function() {
@@ -102,20 +102,19 @@ describe("Whether the Weather App", function() {
         }
       });
 
-      cy.get(".info")
-        .should("have.text", "Geolocation timeout")
-        .and("have.class", "error");
+      cy.contains("Geolocation timeout");
     });
   });
 
   context("when weather api is not working correctly", function() {
     beforeEach(function() {
-      cy.visit("/", {
-        onBeforeLoad(win) {
-          cy.stub(win.navigator.geolocation, "getCurrentPosition", cb => {
-            cb(mockLocation);
-          }).as("mockGeolocation");
-        }
+      cy.on("uncaught:exception", () => {
+        return false;
+      });
+      cy.on("window:before:load", win => {
+        cy.stub(win.navigator.geolocation, "getCurrentPosition", cb => {
+          cb(dummyLocation);
+        }).as("mockGeolocation");
       });
     });
 
@@ -125,12 +124,11 @@ describe("Whether the Weather App", function() {
         url: apiUrl,
         method: "POST",
         status: 500,
-        response: { error: "Error" }
+        response: { error: "Some error" }
       });
+      cy.visit("/");
 
-      cy.get(".info")
-        .should("contain", "Error")
-        .and("have.class", "error");
+      cy.contains("Some error");
     });
 
     it("shows error when api returns incompatible data", function() {
@@ -141,10 +139,9 @@ describe("Whether the Weather App", function() {
         status: 200,
         response: { foo: "bar" }
       });
+      cy.visit("/");
 
-      cy.get(".info")
-        .should("contain", "Cannot parse weather data")
-        .and("have.class", "error");
+      cy.contains("Could not parse weather data");
     });
   });
 

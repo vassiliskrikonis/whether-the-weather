@@ -1,0 +1,5 @@
+{
+    "env": {
+        "DARKSKY_API_KEY": "@darksky-key"
+    }
+}
