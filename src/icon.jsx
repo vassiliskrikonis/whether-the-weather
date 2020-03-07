@@ -1,5 +1,5 @@
 import React from "react";
-import icons from "../js/icon-mapper";
+import icons from "./icon-mapper";
 import { HideUntilLoaded } from "react-animation";
 import styled from "styled-components";
 
