@@ -1,10 +1,9 @@
-const moment = require("moment");
-const fetch = require("node-fetch");
+import moment from "moment";
 
-export default async (req, res) => {
-  const { longitude: lon, latitude: lat, time } = req.body;
+export async function POST(req) {
+  const { longitude: lon, latitude: lat, time } = await req.json();
   if ([lon, lat, time].some(v => v === undefined || v === null)) {
-    return res.status(400).send("Missing parameters");
+    return Response.error();
   }
 
   const todaysURL =
@@ -13,5 +12,5 @@ export default async (req, res) => {
   const yesterday = moment.parseZone(time).subtract(1, "days");
   const yesterdaysWeather = await (await fetch(todaysURL + "," + yesterday.format())).json();
 
-  return res.status(200).send([todaysWeather, yesterdaysWeather]);
-};
+  return Response.json([todaysWeather, yesterdaysWeather]);
+}
