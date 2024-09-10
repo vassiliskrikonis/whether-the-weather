@@ -31,7 +31,7 @@
   "author": "Vassilis Krikonis",
   "dependencies": {
     "assets": "^3.0.1",
-    "axios": "^0.21.1",
+    "axios": "^0.28.0",
     "css": "^2.2.4",
     "luxon": "^1.28.1",
     "react": "^16.12.0",
