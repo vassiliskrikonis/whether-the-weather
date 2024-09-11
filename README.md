@@ -1,7 +1,7 @@
 # whether-the-weather
 a simple web app about the weather
 
-https://vassiliskrikonis-weather.surge.sh/
+https://whether-the-weather.vercel.app/
 
 ## Credits
 
