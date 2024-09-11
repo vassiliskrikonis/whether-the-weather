@@ -11,16 +11,20 @@ import cloudyNight from "../assets/noun_Cloudy Night_193892.svg";
 import hourglass from "../assets/noun_hourglass_1403095.svg";
 
 const icons = {
-  "clear-day": sun,
-  "clear-night": moon,
-  "rain": umbrella,
-  "snow": snowflake,
+  "01d": sun,
+  "01n": moon,
+  "10d": umbrella,
+  "10n": umbrella,
+  "13d": snowflake,
+  "13n": snowflake,
   "sleet": sleet,
   "wind": wind,
-  "fog": fog,
-  "cloudy": cloud,
-  "partly-cloudy-day": cloudyDay,
-  "partly-cloudy-night": cloudyNight,
+  "50d": fog,
+  "50n": fog,
+  "03d": cloud,
+  "03n": cloud,
+  "02d": cloudyDay,
+  "02n": cloudyNight,
   "loading": hourglass
 };
 
