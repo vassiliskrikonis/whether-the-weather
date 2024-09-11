@@ -4,8 +4,8 @@ import styled from "styled-components";
 const Footer = ({ className }) => (
   <footer className={className}>
     <sup>1</sup>According to{" "}
-    <a href="https://darksky.net/poweredby/" target="_blank" rel="noopener noreferrer">
-      Dark Sky
+    <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">
+      OpenWeather
     </a>
   </footer>
 );
