@@ -8,10 +8,8 @@ const weatherResponseSchema = yup.object().shape({
     .array()
     .of(
       yup.object().shape({
-        currently: yup.object().shape({
-          apparentTemperature: yup.number().required(),
-          icon: yup.string().required()
-        })
+        feels_like: yup.number().required(),
+        icon: yup.string().required()
       })
     )
     .required()
@@ -49,7 +47,7 @@ export function useDarkSky(location) {
   useEffect(() => {
     if (!location) return;
 
-    const API_URL = process.env.API_URL || "/api/darksky-all";
+    const API_URL = process.env.API_URL || "/api/weather";
     const now = DateTime.local().toString();
     const { latitude, longitude } = location;
 
@@ -62,9 +60,9 @@ export function useDarkSky(location) {
           });
         }
         const [today, yesterday] = response.data;
-        const todaysTemp = today.currently.apparentTemperature;
-        const icon = today.currently.icon;
-        const yesterdaysTemp = yesterday.currently.apparentTemperature;
+        const todaysTemp = today.feels_like;
+        const icon = today.icon;
+        const yesterdaysTemp = yesterday.feels_like;
 
         setTemperatures({
           today: todaysTemp,
